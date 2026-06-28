@@ -1,0 +1,14 @@
+{
+  "labels": [
+    "Low",
+    "Medium",
+    "High"
+  ],
+  "bin_edges": [
+    0.3,
+    3.99,
+    6.75,
+    20.9
+  ],
+  "price_unit": "Lakhs"
+}

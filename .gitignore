@@ -1,0 +1,414 @@
+# =================================================================
+# MASTER .gitignore — Full-Stack / DevOps / DSML / CI-CD Projects
+# =================================================================
+# Validated against (June 2026):
+#   - github/gitignore (official templates): Python, Node, Terraform, Jekyll
+#     https://github.com/github/gitignore
+#   - DVC docs: https://dvc.org/doc
+#   - MLflow docs: https://mlflow.org/docs/latest/
+#   - Weights & Biases docs: https://docs.wandb.ai
+# Sections are independent — delete any block your stack doesn't use.
+# For files that are LARGE but must be versioned (datasets, models),
+# prefer Git LFS or DVC over committing them directly, even small ones
+# add up across history and bloat every future clone.
+# =================================================================
+
+
+# ===========================================
+# PYTHON
+# ===========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing / coverage / type-checkers
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+cython_debug/
+
+# Notebooks
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# Environments (.env itself is handled in the SECRETS section below)
+.venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+virtualenv/
+
+# Dependency manager lockfiles — DO ignore the tool's local state,
+# but DO NOT ignore the lockfiles themselves (poetry.lock, uv.lock,
+# Pipfile.lock, pdm.lock) — committing them is the recommended
+# practice for reproducible installs in applications.
+.pdm-python
+.pdm-build/
+.pixi/
+
+# Django / Flask stuff (harmless to keep even if unused)
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+
+# mkdocs / Sphinx
+docs/_build/
+/site
+
+
+# ===========================================
+# NODE.JS / JAVASCRIPT / TYPESCRIPT / BUN
+# (React, Next.js, Vite, NestJS, Express, etc.)
+# ===========================================
+node_modules/
+jspm_packages/
+bower_components/
+
+# Logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Lockfiles — KEEP these tracked (package-lock.json, yarn.lock,
+# pnpm-lock.yaml, bun.lockb / bun.lock). Do not add them below.
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vuepress/dist
+.docusaurus/
+.parcel-cache/
+.turbo/
+.nx/cache/
+
+# Caches
+.npm/
+.eslintcache
+.stylelintcache
+.cache/
+*.tsbuildinfo
+.vite/
+vite.config.*.timestamp-*
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Yarn v3 / PnP
+.pnp.*
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/sdks/
+!.yarn/versions/
+
+# Bun
+.bun/
+
+# Runtime / misc
+*.pid
+*.seed
+*.pid.lock
+.node_repl_history
+*.tgz
+
+
+# ===========================================
+# JEKYLL / RUBY (blog & static site projects)
+# ===========================================
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+# NOTE: Gemfile.lock SHOULD be committed for sites/apps (per Bundler
+# guidance) — do not add it here.
+
+
+# ===========================================
+# DATA SCIENCE / MACHINE LEARNING ARTIFACTS
+# ===========================================
+# Raw / large datasets — prefer DVC or Git LFS instead of committing.
+# Uncomment what applies to your project:
+# data/*.csv
+# data/*.xlsx
+# data/*.json
+# data/*.parquet
+# data/*.feather
+# *.npz
+# *.npy
+# If you have a TINY sample file you WANT to share, whitelist it:
+# !data/sample_very_small.csv
+
+# Trained model / weight files — track via DVC, MLflow Model Registry,
+# or cloud storage instead of git. Whitelist individual tiny fixtures
+# with a negated pattern if you genuinely need one tracked.
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.safetensors
+*.weights
+# !models/tiny_fixture.pkl
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+
+# DVC (the `dvc add` workflow auto-manages most of this via its own
+# generated .gitignore files inside data/model dirs — these are extra)
+/.dvc/cache
+/.dvc/tmp
+*.dvc.lock
+
+# Weights & Biases
+wandb/
+
+# TensorBoard
+runs/
+tb_logs/
+
+# Hugging Face cache
+.cache/huggingface/
+transformers_cache/
+
+# dbt
+target/
+dbt_packages/
+dbt_modules/
+logs/
+
+# Dagster
+.dagster_home/
+storage/
+
+# Apache Spark (local dev)
+spark-warehouse/
+metastore_db/
+derby.log
+
+
+# ===========================================
+# DATABASES & LOCAL DATA STORES
+# ===========================================
+*.sqlite3
+*.sqlite
+*.db
+*.rdb
+*.aof
+# Local Docker-mounted DB volumes (common in docker-compose dev setups)
+pgdata/
+mysql-data/
+redis-data/
+
+
+# ===========================================
+# SECRETS, CREDENTIALS & ENV VARIABLES
+# Never commit real secrets — commit a `.env.example` instead.
+# ===========================================
+.env
+.env.*
+!.env.example
+.envrc
+.streamlit/secrets.toml
+config.ini
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.cert
+*credentials*.json
+*service-account*.json
+.pypirc
+.npmrc
+.netrc
+kubeconfig
+*.kubeconfig
+
+
+# ===========================================
+# DOCKER
+# ===========================================
+docker-compose.override.yml
+.docker/
+# NOTE: keep Dockerfile, .dockerignore, and the base docker-compose.yml
+# tracked — they define the build, they aren't local state.
+
+
+# ===========================================
+# INFRASTRUCTURE AS CODE — TERRAFORM / ANSIBLE / PULUMI
+# (Terraform block per official github/gitignore/Terraform.gitignore)
+# ===========================================
+**/.terraform/*
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Ansible
+*.retry
+
+# Pulumi
+Pulumi.*.yaml
+!Pulumi.yaml
+
+
+# ===========================================
+# KUBERNETES / HELM
+# ===========================================
+charts/*.tgz
+secrets.yaml
+*-secret.yaml
+
+
+# ===========================================
+# CI/CD & MONOREPO BUILD CACHES
+# (.github/workflows/*.yml and CI config itself should stay tracked —
+# this only covers locally-generated CI/build tool state.)
+# ===========================================
+.gitlab-ci-local/
+.act/
+
+
+# ===========================================
+# AI CODING ASSISTANT LOCAL CONFIG / CACHES
+# (Local session state — share project rules via README instead.)
+# ===========================================
+.claude/
+.cursor/
+.aider*
+.continue/
+.windsurf/
+
+
+# ===========================================
+# IDE & EDITOR
+# ===========================================
+# VS Code — keep shared settings, ignore personal workspace state
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+
+# JetBrains (PyCharm, IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+out/
+
+# Others
+*.swp
+*.swo
+*~
+.directory
+
+
+# ===========================================
+# OS-SPECIFIC JUNK
+# ===========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*.fuse_hidden*
+.Trash-*
+.nfs*
+
+
+# ===========================================
+# GENERIC BUILD / PACKAGING / TEMP / LOGS
+# ===========================================
+*.tmp
+*.bak
+*.orig
+*.log
