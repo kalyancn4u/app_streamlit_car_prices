@@ -72,11 +72,12 @@ git branch -M main
 git push -u origin main
 ```
 
-> ✅ **Good news about this repo's setup:** the dataset (`data/*.csv`) and the
-> small config files (`models/*.json`) are committed, but the **big model files
-> (`models/*.pkl`) are git-ignored**. That's exactly right — the robot will
-> *rebuild* the `.pkl` files itself by running `train_model.py`. You never store
-> large binaries in git.
+> ✅ **Good news about this repo's setup:** the dataset (`data/*.csv`), the
+> config files (`models/*.json`) **and the trained models (`models/*.pkl`,
+> ~14.5 MB) are all committed** — so a fresh clone or deploy runs immediately
+> with no training step. The models are small and well under GitHub's limits.
+> (If your models ever grow large, flip to rebuilding them in CI instead — the
+> robot below already runs `train_model.py`, so it can regenerate them on demand.)
 
 ---
 
@@ -206,21 +207,20 @@ GitHub repo and redeploys on every push. No workflow file needed.
 4. Click **Deploy**. Done — you get a public URL.
 5. From now on, **every `git push` redeploys automatically.** ✨
 
-> ⚠️ **Important for this project:** the trained `models/*.pkl` files are
-> git-ignored, so a fresh deploy won't have them and the app will show
-> *"Model artifacts not found."* Two clean fixes — pick **one**:
+> ✅ **Good for this project:** the trained `models/*.pkl` files are **committed**
+> to the repo (~14.5 MB total), so a fresh Streamlit Cloud deploy already has
+> everything it needs — it just works, no extra setup.
 >
-> 1. **Train on the host (recommended).** Add this at the very top of `app.py`
->    (right after the imports) so the app builds the models if they're missing:
->    ```python
->    import os
->    if not os.path.exists("models/price_model.pkl"):
->        import train_model
->        train_model.main()
->    ```
->    The first boot trains for ~1–2 min; later boots are instant.
-> 2. **Or commit the models.** Remove the `models/*.pkl` line from `.gitignore`
->    and commit them — simplest, but adds ~15 MB to the repo.
+> If you ever decide to *stop* committing the models (e.g. they grow large),
+> re-add `models/*.pkl` to `.gitignore` and build them on the host instead by
+> adding this at the very top of `app.py`, right after the imports:
+> ```python
+> import os
+> if not os.path.exists("models/price_model.pkl"):
+>     import train_model
+>     train_model.main()
+> ```
+> The first boot then trains for ~1–2 min; later boots are instant.
 
 ### Route B (advanced, Actions-driven): build a Docker image
 
@@ -320,16 +320,16 @@ jobs:
       - name: Retrain
         run: python train_model.py
 
-      # Small text configs CAN live in git — commit them back.
-      - name: Commit refreshed metadata
+      # This repo commits its models, so commit ALL refreshed artifacts back.
+      - name: Commit refreshed artifacts
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add models/*.json
-          git commit -m "CDD: refresh model metadata [skip ci]" || echo "Nothing changed"
+          git add models/
+          git commit -m "CDD: refresh trained models + metadata [skip ci]" || echo "Nothing changed"
           git push
 
-      # Big binaries should NOT live in git — publish them as a download instead.
+      # Optional: also publish the models as a downloadable artifact.
       - name: Upload trained models as an artifact
         uses: actions/upload-artifact@v4
         with:
@@ -344,11 +344,11 @@ jobs:
   `minute hour day-of-month month day-of-week`. `0 3 * * 1` = "minute 0, hour 3,
   any day, any month, on Mondays" → **every Monday 03:00 UTC**. (Try
   [crontab.guru](https://crontab.guru) to design your own.)
-- **Where do the outputs go?** The tiny `*.json` files are committed straight
-  back to the repo. The large `*.pkl` files are uploaded as a downloadable
-  **artifact** (find it on the run's summary page) — this avoids bloating git
-  with big binaries. `[skip ci]` in the commit message stops it from waking the
-  CI robot in an endless loop.
+- **Where do the outputs go?** Because this repo commits its models, the retrain
+  job commits **all** refreshed artifacts (`models/*.json` *and* `models/*.pkl`)
+  straight back to the repo, and additionally uploads the `.pkl` files as a
+  downloadable **artifact** (find it on the run's summary page). `[skip ci]` in
+  the commit message stops it from waking the CI robot in an endless loop.
 
 ---
 
@@ -403,7 +403,7 @@ If you deploy to a service that needs an API key (Render, AWS, etc.):
 | "Workflow file is invalid"            | A Tab instead of spaces, or misaligned indentation. Re-check spacing.                                                               |
 | `ModuleNotFoundError` in a run      | A library is missing from `requirements.txt`. Add it and push.                                                                    |
 | Push step fails:*permission denied* | Set**Workflow permissions → Read and write** (Section 8).                                                                    |
-| Deploy can't find `model.pkl`       | The host didn't retrain. Ensure `python train_model.py` runs at build/startup (the `.pkl` files aren't in git).                 |
+| Deploy can't find `model.pkl`       | Shouldn't happen — the `.pkl` models are committed. If you re-ignored them, make sure `python train_model.py` runs at build/startup to regenerate them. |
 | Job is slow / times out               | Add `cache: pip` (already included), and keep heavy training in the CDD workflow rather than on every CI push.                    |
 
 ---

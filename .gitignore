@@ -205,6 +205,11 @@ vendor/
 *.safetensors
 *.weights
 # !models/tiny_fixture.pkl
+# This project deliberately COMMITS its two trained models (~14.5 MB total) so a
+# fresh clone runs immediately without retraining. They're small and well under
+# GitHub's limits; re-ignore them if you switch to rebuilding on deploy.
+!models/price_model.pkl
+!models/range_model.pkl
 
 # MLflow
 mlruns/

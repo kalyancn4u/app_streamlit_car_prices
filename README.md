@@ -182,7 +182,10 @@ Activate it:
 pip install -r requirements.txt
 ```
 
-### 5. Train the models *(first time only)*
+### 5. Train the models *(optional — pre-trained models ship with the repo)*
+
+The trained models are **committed to the repo**, so you can skip straight to
+step 6. Run this only if you want to retrain (e.g. on new data):
 
 ```bash
 python train_model.py
@@ -416,7 +419,7 @@ app_streamlit_car_prices/
 ├── train_model.py             # ⚙ Training pipeline — builds all model artifacts
 ├── requirements.txt           # 📦 Python dependencies
 ├── README.md                  # 📄 This file
-├── .gitignore                 # 🚫 Ignored files (incl. the big *.pkl models)
+├── .gitignore                 # 🚫 Ignored files (caches, virtualenvs, secrets)
 │
 ├── data/
 │   └── cars24-car-price-cleaned-new.csv   # 🗃 Dataset (only needed for training)
@@ -450,9 +453,10 @@ app_streamlit_car_prices/
 
 ### The generated model artifacts (in `models/`)
 
-You never edit these by hand — `train_model.py` regenerates them. The two
-`.pkl` files are git-ignored (they're large binaries); the small `.json` files
-can safely live in version control.
+You never edit these by hand — `train_model.py` regenerates them. All five
+artifacts (including the two `.pkl` models, ~14.5 MB total) are committed to the
+repo, so a **fresh clone runs immediately** without a training step. Delete them
+and rerun `python train_model.py` anytime to rebuild.
 
 | Artifact | Format | Contains | Consumed by |
 | :------- | :----- | :------- | :---------- |
