@@ -661,3 +661,13 @@ Three companion guides go deeper, each written for a beginner:
 > Cars24 listings. Treat them as guidance, not a guaranteed sale price.
 
 <sub>Built with ❤️ using Streamlit and scikit-learn.</sub>
+
+---
+
+### 🔗 The Car Prices Trio
+
+Three sibling projects built on the same Cars24 dataset:
+
+- 🎛️ **Streamlit web app** — interactive price-predictor UI · _you are here_
+- 🐳 **[Flask REST API →](https://github.com/kalyancn4u/app_flask_car_prices)** — containerised API (Docker + AWS ECS/Fargate)
+- 🔬 **[MLOps lifecycle →](https://github.com/kalyancn4u/app_mlops_car_prices)** — full SDLC: notebooks → production pipeline
