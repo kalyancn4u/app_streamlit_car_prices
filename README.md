@@ -11,10 +11,10 @@ listings** across **41 brands** and **3,233 models**.
 ```
    You tell it:                          It tells you:
    ┌─────────────────────┐               ┌──────────────────────────────┐
-   │ 🏷️  Maruti          │               │ 💰  ₹5.24 Lakhs              │
-   │ 🚙  Swift VXI        │   ───────►    │ 🎯  Medium-budget car        │
-   │ 📅  5 years old      │   predicts    │      (similar cars sell for  │
-   │ 🛣️  45,000 km        │               │       ₹3.99 – ₹6.75 Lakhs)   │
+   │ 🏷️  Maruti          │               │ 💰  ₹5.24 Lakhs             │
+   │ 🚙  Swift VXI       │   ───────►    │ 🎯  Medium-budget car       │
+   │ 📅  5 years old     │   predicts    │      (similar cars sell for  │
+   │ 🛣️  45,000 km       │               │       ₹3.99 – ₹6.75 Lakhs)   │
    └─────────────────────┘               └──────────────────────────────┘
 ```
 
