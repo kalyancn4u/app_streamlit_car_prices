@@ -234,10 +234,10 @@ disagree** with the model it's paired with.
 
 ```
         train_model.py                              app.py / app_v1.py
-  ┌──────────────────────────────┐          ┌───────────────────────────────┐
-  │ data/cars24-…-cleaned.csv    │          │  loads 5 artifacts at start    │
-  │            │                 │          │                                │
-  │  clean → bin → fit RF × 2    │          │  metadata.json ──┐  builds the │
+  ┌──────────────────────────────┐          ┌─────────────────────────────────┐
+  │ data/cars24-…-cleaned.csv    │          │  loads 5 artifacts at start     │
+  │            │                 │          │                                 │
+  │  clean → bin → fit RF × 2    │          │  metadata.json ──┐  builds the  │
   │            │                 │  ──────► │   • brand→model   │  entire     │
   │  writes ▼                    │          │   • slider ranges ├─► form      │
   │   price_model.pkl            │          │   • valid options │             │
@@ -245,7 +245,7 @@ disagree** with the model it's paired with.
   │   feature_columns.json       │          │   • band edges + UNIT           │
   │   range_config.json          │          │  price_model → ₹ exact price    │
   │   metadata.json              │          │  range_model → Low/Medium/High  │
-  └──────────────────────────────┘          └───────────────────────────────┘
+  └──────────────────────────────┘          └─────────────────────────────────┘
 ```
 
 - **`train_model.py`** does all the heavy lifting once: load → clean → engineer
