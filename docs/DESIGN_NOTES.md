@@ -208,7 +208,7 @@ The CNG and Dealer cases confirm the baseline categories work end-to-end.
 
 ---
 
-## 8. Simple edition — `app.py` (mirrored as `app_v2.py`)
+## 8. Simple edition — `app.py`
 
 A second front-end built for **demos to complete beginners**: *simplicity is the
 ultimate sophistication*. Same trained models, a radically smaller surface.

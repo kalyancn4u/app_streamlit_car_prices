@@ -169,7 +169,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Check the code compiles
-        run: python -m py_compile app.py app_v2.py train_model.py
+        run: python -m py_compile app.py app_v1.py train_model.py
 
       - name: Train the model (smoke-tests the whole pipeline)
         run: python train_model.py
@@ -202,7 +202,7 @@ GitHub repo and redeploys on every push. No workflow file needed.
 1. Push your repo to GitHub (Section 3).
 2. Go to **[share.streamlit.io](https://share.streamlit.io)** → sign in with GitHub.
 3. **New app** → choose your **repo**, **branch** (`main`), and **main file**
-   (`app.py` or `app_v2.py`).
+   (`app.py` or `app_v1.py`).
 4. Click **Deploy**. Done — you get a public URL.
 5. From now on, **every `git push` redeploys automatically.** ✨
 

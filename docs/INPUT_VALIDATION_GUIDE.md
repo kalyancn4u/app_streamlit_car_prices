@@ -52,7 +52,7 @@ Every input is a **dropdown, slider, or radio button** — never a free text box
 
 - **Why it helps:** you can't make a typo ("Marutee"), and you can't enter a
   number that's out of range. A menu, not a blank page.
-- **Where:** every field in both `app.py` and `app_v2.py`.
+- **Where:** every field in both `app.py` and `app_v1.py`.
 
 > The *old* version had a free-text "Model" box. With 3,233 real models, people
 > mistyped constantly — and the app quietly gave a meaningless answer. That box
@@ -90,7 +90,7 @@ the data. So we don't ask the user to guess — we read it off the chosen car.
 
 The two apps show this slightly differently:
 
-| | Full app (`app.py`) | Simple app (`app_v2.py`) |
+| | Full app (`app_v1.py`) | Simple app (`app.py`) |
 | :-- | :------------------ | :----------------------- |
 | Fuel / Gearbox / Seats | Shown as **dropdowns limited to that model's real options** (usually one option) | **Auto-filled and shown as read-only text** ("⛽ Diesel · ⚙️ Automatic · 💺 5 seats") |
 | Can you pick something impossible? | No — only real options are listed | No — you can't edit it at all |
@@ -224,8 +224,8 @@ scratch/test file and safe to remove.
 The app itself *is* the best smoke test: launch it and click around.
 
 ```bash
-streamlit run app_v2.py     # simple version
-streamlit run app.py        # full version
+streamlit run app.py        # simple version
+streamlit run app_v1.py     # full version
 ```
 
 If a Maruti shows a few Lakhs and a Mercedes shows ~₹20 Lakhs, the wiring is good.

@@ -130,9 +130,8 @@ Pick whichever fits your audience.
 | **Predict** | Click **Estimate price** | **Live** — updates as you type, no button |
 | **Philosophy** | *Power and transparency* | *Simplicity is the ultimate sophistication* |
 
-> ℹ️ `app_v2.py` is a byte-for-byte copy of the Simple edition (`app.py`), kept
-> so both can be launched side-by-side via `.claude/launch.json`. If you only
-> remember one command, use **`streamlit run app.py`**.
+> ℹ️ If you only remember one command, use **`streamlit run app.py`** (Simple);
+> switch to **`streamlit run app_v1.py`** when you want the Full edition.
 
 **How the Simple edition stays accurate with fewer questions:** a beginner
 can't be expected to know a car's engine size (cc) or power (bhp), so those are
@@ -414,7 +413,6 @@ field-by-field safety table — is in
 app_streamlit_car_prices/
 ├── app.py                     # ▶ Simple edition (default) — live, beginner-friendly
 ├── app_v1.py                  # ▶ Full edition — rich UI, all inputs editable
-├── app_v2.py                  # ▶ Simple edition (identical copy of app.py)
 ├── train_model.py             # ⚙ Training pipeline — builds all model artifacts
 ├── requirements.txt           # 📦 Python dependencies
 ├── README.md                  # 📄 This file
@@ -435,10 +433,6 @@ app_streamlit_car_prices/
 │   ├── INPUT_VALIDATION_GUIDE.md   # How wrong inputs are made impossible
 │   └── CI_CD_GITHUB_ACTIONS.md     # Automating test/deploy/retrain
 │
-├── archive/                   # 🗄 Earlier scratch scripts (safe to ignore/delete)
-│   ├── app_price_range.py
-│   └── app_model_smoke_test.py
-│
 └── .claude/launch.json        # ▶ Preview-tool launch config (ports 8503 / 8504)
 ```
 
@@ -452,7 +446,6 @@ app_streamlit_car_prices/
 | **`train_model.py`** | The training pipeline: loads & cleans the CSV, engineers features, fits both Random Forests, evaluates them, and writes the five artifacts. Self-documenting `CONFIG` block at the top. | `python train_model.py` — run once, and again whenever the data changes. |
 | **`app.py`** | The **Simple edition** front-end. Six intuitive questions, live-updating estimate, plain widgets. | `streamlit run app.py` |
 | **`app_v1.py`** | The **Full edition** front-end. Every input editable, styled cards, sidebar quality metrics, three-band gauge, debug table. | `streamlit run app_v1.py` |
-| **`app_v2.py`** | Byte-identical copy of `app.py`, kept for the launch config. | `streamlit run app_v2.py` |
 | **`requirements.txt`** | Pins the five libraries the app needs: `joblib`, `numpy`, `pandas`, `scikit-learn`, `streamlit`. | `pip install -r requirements.txt` |
 
 ### The generated model artifacts (in `models/`)
@@ -475,8 +468,7 @@ can safely live in version control.
 | :------------ | :------ |
 | `data/…cleaned-new.csv` | The raw dataset. Needed **only** for (re)training — the running app doesn't read it. |
 | `docs/` | Three deep-dive guides (see [Further Reading](#-further-reading)). |
-| `archive/` | Older scratch/smoke-test scripts kept for history. Not part of the running app; safe to delete. |
-| `.claude/launch.json` | Tells the preview tooling how to start each edition (Simple on port 8503, its copy on 8504). |
+| `.claude/launch.json` | Tells the preview tooling how to start each edition (Simple on port 8503, Full on 8504). |
 | `__pycache__/` | Auto-generated compiled Python. Ignored by Git; safe to delete anytime. |
 
 ---
