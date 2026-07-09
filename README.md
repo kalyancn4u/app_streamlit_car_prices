@@ -35,11 +35,12 @@ listings** across **41 brands** and **3,233 models**.
    - [Results](#results)
 8. [Mistake-Proof Inputs by Design](#-mistake-proof-inputs-by-design)
 9. [Project Structure & Every Artifact Explained](#-project-structure--every-artifact-explained)
-10. [Companion Flask REST API](#-companion-flask-rest-api)
-11. [Automation (CI / CD / CDD)](#-automation-ci--cd--cdd)
-12. [Troubleshooting](#-troubleshooting)
-13. [Tech Stack & Glossary for Newcomers](#-tech-stack--glossary-for-newcomers)
-14. [Further Reading](#-further-reading)
+10. [The Dataset File: CSV, Excel & Storage Formats](#-the-dataset-file-csv-excel--storage-formats)
+11. [Companion Flask REST API](#-companion-flask-rest-api)
+12. [Automation (CI / CD / CDD)](#-automation-ci--cd--cdd)
+13. [Troubleshooting](#-troubleshooting)
+14. [Tech Stack & Glossary for Newcomers](#-tech-stack--glossary-for-newcomers)
+15. [Further Reading](#-further-reading)
 
 ---
 
@@ -474,6 +475,92 @@ and rerun `python train_model.py` anytime to rebuild.
 | `docs/` | Three deep-dive guides (see [Further Reading](#-further-reading)). |
 | `.claude/launch.json` | Tells the preview tooling how to start each edition (Simple on port 8503, Full on 8504). |
 | `__pycache__/` | Auto-generated compiled Python. Ignored by Git; safe to delete anytime. |
+
+---
+
+## 🗃️ The Dataset File: CSV, Excel & Storage Formats
+
+The training data lives at
+[`data/cars24-car-price-cleaned-new.csv`](data/cars24-car-price-cleaned-new.csv)
+— a **plain, uncompressed CSV** (~1.5 MB). This section explains what that file
+is, the "it opens in Excel when I click it" behaviour, how to inspect it
+*safely*, and the better formats you could store tabular data in.
+
+### Why it opens in Excel — and why that's a trap
+
+A **CSV** ("comma-separated values") is just a text file: one row per line,
+columns separated by commas. On Windows the `.csv` extension is **associated
+with Excel**, so double-clicking it launches Excel. Convenient for a peek — but
+Excel silently "helpfully" rewrites data:
+
+- strips leading zeros (`007` → `7`),
+- turns long numbers/IDs into scientific notation (`9192631770` → `9.19E+09`),
+- reinterprets text like `3-4` or `MAR1` as **dates**,
+- can change the character encoding when you save.
+
+> ⚠️ **Never double-click a data CSV, edit it, and hit Save** — you can corrupt
+> it without any warning. Excel is a *viewer of last resort* for raw data.
+
+**How to look at it safely instead:**
+
+| Goal | Do this |
+| :--- | :------ |
+| Just read a few rows | Open in a text editor (VS Code, Notepad) or run `head data/…csv` in a terminal |
+| Inspect it properly | Load it in pandas: `pd.read_csv("data/…csv").head()` |
+| Confirm what the file *really* is | `file data/…csv` (reports the true type from the file's bytes, not its name) |
+| See true extensions in Explorer | File Explorer → **View → File name extensions** (Windows hides them by default, so `data.csv` may actually be `data.csv.gz`) |
+
+### Could this file be compressed? Yes — and pandas reads it directly
+
+This project keeps the CSV **uncompressed** for maximum human-readability (you
+can open it anywhere). But you don't have to: `pandas.read_csv()` transparently
+reads **`.gz`, `.bz2`, `.xz` and `.zip`** by file extension, with **no unzip
+step and no code change** — the companion Flask project ships this very dataset
+as `cars24-…-new.csv.gz` (≈5× smaller) for exactly this reason. A compressed
+CSV like `.csv.gz` won't open in Excel on double-click, though: its extension is
+`.gz`, so Windows hands it to an **archive tool** (7-Zip / WinRAR), not Excel.
+To peek inside without extracting: `zcat file.csv.gz | head` (Git Bash) or
+`pd.read_csv("file.csv.gz", nrows=5)`.
+
+### Storage-format alternatives — measured on *this* dataset
+
+Written from the same 19,820 × 17 table; read time is the fastest of 5 pandas
+reads on this machine (your absolute numbers will differ — the **ranking** is
+what matters):
+
+| Format | File size | vs CSV | Read speed | Human-readable? | Excel double-click? | Keeps column types? |
+| :----- | --------: | -----: | ---------: | :-------------- | :------------------ | :------------------ |
+| **CSV (raw)** — what's shipped here | 1,535 KB | 100 % | 25 ms | ✅ plain text | ✅ yes | ❌ everything is text |
+| **CSV + gzip** (`.csv.gz`) | 290 KB | 19 % | 28 ms | ⚠️ after unzip | ❌ archive tool | ❌ |
+| **CSV + xz / LZMA** (`.csv.xz`) | 163 KB | 11 % | 34 ms | ⚠️ after unzip | ❌ | ❌ |
+| **CSV + bzip2** (`.csv.bz2`) | 151 KB | 10 % | 74 ms | ⚠️ after unzip | ❌ | ❌ |
+| **Parquet** (snappy) | 274 KB | 18 % | **7 ms** | ❌ binary | ❌ needs tools | ✅ yes |
+| **Parquet** (zstd) | 227 KB | 14 % | **7 ms** | ❌ binary | ❌ | ✅ yes |
+| **Feather / Arrow** | 867 KB | 57 % | **5 ms** | ❌ binary | ❌ | ✅ yes |
+
+**How to read this table:**
+
+- **Smallest on disk:** `CSV + bzip2` (10 %) — but the **slowest to read** (3× a
+  raw CSV). Great for cold archival you rarely open; poor for a file you load
+  often.
+- **Best size/speed balance for a git repo:** **`CSV + gzip`** — 5× smaller than
+  raw CSV, reads just as fast, one command to make (`gzip -9 file.csv`), and
+  pandas reads it directly. This is what the Flask project uses.
+- **Best for real data pipelines:** **Parquet** — nearly as small as gzip **and
+  ~3–4× faster to read** than CSV, because it's *columnar* and stores each
+  column's type, so no "is this a number or a string?" guessing on load. Needs
+  the `pyarrow` library. This is the industry default for analytics.
+- **Fastest read, size no object:** **Feather/Arrow** — near-instant, but ~3×
+  larger than Parquet; ideal for short-lived local hand-offs, not for shipping.
+- **Most universal & readable:** **raw CSV** — anyone can open it, anywhere, with
+  no special library; the price is size and the loss of type information.
+
+> 🧭 **Rules of thumb:** *sharing with humans / tiny files* → **CSV**;
+> *shrinking a CSV in a repo with zero friction* → **CSV + gzip**;
+> *a real analytics workflow or a large dataset* → **Parquet**;
+> *maximum read speed for temporary local files* → **Feather**.
+> Avoid **pickle** for datasets — it's fast but executes arbitrary code on load
+> (a security risk) and breaks across library versions.
 
 ---
 
