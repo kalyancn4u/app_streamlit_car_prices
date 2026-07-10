@@ -660,10 +660,11 @@ Three companion guides go deeper, each written for a beginner:
 
 ---
 
-### 🔗 The Car Prices Trio
+### 🔗 The Car Prices Quartet
 
-Three sibling projects built on the same Cars24 dataset:
+Four sibling projects built on the same Cars24 dataset:
 
 - 🎛️ **Streamlit web app** — interactive price-predictor UI · _you are here_
 - 🐳 **[Flask REST API →](https://github.com/kalyancn4u/app_flask_car_prices)** — containerised API (Docker + AWS ECS/Fargate)
 - 🔬 **[MLOps lifecycle →](https://github.com/kalyancn4u/app_mlops_car_prices)** — full SDLC: notebooks → production pipeline
+- 🛠️ **[Pipeline starter →](https://github.com/kalyancn4u/app_pipeline_car_prices)** — beginner-friendly guide + test stubs to extend
