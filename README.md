@@ -157,7 +157,7 @@ fill is **per-model**:
 ### 2. Open the project folder
 
 ```bash
-cd path/to/app_streamlit_car_prices
+cd path/to/app_car_prices_streamlit
 ```
 
 ### 3. Create a virtual environment *(recommended)*
@@ -414,7 +414,7 @@ field-by-field safety table — is in
 ## 📁 Project Structure & Every Artifact Explained
 
 ```
-app_streamlit_car_prices/
+app_car_prices_streamlit/
 ├── app.py                     # ▶ Simple edition (default) — live, beginner-friendly
 ├── app_v1.py                  # ▶ Full edition — rich UI, all inputs editable
 ├── train_model.py             # ⚙ Training pipeline — builds all model artifacts
@@ -665,6 +665,6 @@ Three companion guides go deeper, each written for a beginner:
 Four sibling projects built on the same Cars24 dataset:
 
 - 🎛️ **Streamlit web app** — interactive price-predictor UI · _you are here_
-- 🐳 **[Flask REST API →](https://github.com/kalyancn4u/app_flask_car_prices)** — containerised API (Docker + AWS ECS/Fargate)
-- 🔬 **[MLOps lifecycle →](https://github.com/kalyancn4u/app_mlops_car_prices)** — full SDLC: notebooks → production pipeline
-- 🛠️ **[Pipeline starter →](https://github.com/kalyancn4u/app_pipeline_car_prices)** — beginner-friendly guide + test stubs to extend
+- 🐳 **[Flask REST API →](https://github.com/kalyancn4u/app_car_prices_flask)** — containerised API (Docker + AWS ECS/Fargate)
+- 🔬 **[MLOps lifecycle →](https://github.com/kalyancn4u/app_car_prices_mlops)** — full SDLC: notebooks → production pipeline
+- 🛠️ **[Pipeline starter →](https://github.com/kalyancn4u/app_car_prices_pipeline)** — beginner-friendly guide + test stubs to extend
