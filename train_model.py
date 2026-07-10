@@ -55,7 +55,9 @@ from sklearn.preprocessing import OneHotEncoder
 
 CONFIG = {
     # Paths
-    "data_csv": "data/cars24-car-price-cleaned-new.csv",
+    # Stored gzip-compressed (~81% smaller); pandas.read_csv infers the .gz
+    # extension and decompresses transparently, so no unzip step is needed.
+    "data_csv": "data/cars24-car-price-cleaned-new.csv.gz",
     "models_dir": "models",
     "price_model_file": "models/price_model.pkl",
     "range_model_file": "models/range_model.pkl",

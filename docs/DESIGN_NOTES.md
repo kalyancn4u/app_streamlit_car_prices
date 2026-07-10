@@ -84,7 +84,7 @@ by it**. The form can never fall out of sync with the model.
 ```
             train_model.py                         app.py / app_v1.py
   ┌───────────────────────────────┐      ┌──────────────────────────┐
-  │ data/cars24-…-cleaned-new.csv │      │  loads 5 artifacts       │
+  │ data/cars24-…-new.csv.gz      │      │  loads 5 artifacts       │
   │            │                  │      │                          │
   │   clean → bin → fit RF×2      │      │  metadata.json ─┐        │
   │            │                  │      │   • makes→models │ builds │
