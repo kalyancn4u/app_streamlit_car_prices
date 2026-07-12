@@ -653,6 +653,8 @@ Four companion guides go deeper, each written for a beginner:
 - 🧪 **[docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md)** — learn testing & debugging from
   scratch by completing the graded stubs in [`tests/test_stubs.py`](tests/test_stubs.py)
   (a green baseline lives in [`tests/test_smoke.py`](tests/test_smoke.py)).
+- 📗 **[docs/API_EXAMPLES.md](docs/API_EXAMPLES.md)** — copy-paste usage recipes for
+  `train_model.py` and the saved model (runnable: [`notebooks/api_examples.ipynb`](notebooks/api_examples.ipynb)).
 
 ---
 

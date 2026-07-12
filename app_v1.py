@@ -150,11 +150,13 @@ st.markdown(
 
 @st.cache_resource(show_spinner="Loading models...")
 def load_models() -> Tuple[Any, Any]:
+    """Load and cache the price and range models."""
     return joblib.load(PRICE_MODEL_PATH), joblib.load(RANGE_MODEL_PATH)
 
 
 @st.cache_data(show_spinner=False)
 def load_config() -> Tuple[List[str], Dict, Dict]:
+    """Load and cache the feature columns, range config and metadata."""
     feature_columns = json.loads(FEATURE_COLUMNS_PATH.read_text(encoding="utf-8"))
     range_config = json.loads(RANGE_CONFIG_PATH.read_text(encoding="utf-8"))
     metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
@@ -162,6 +164,7 @@ def load_config() -> Tuple[List[str], Dict, Dict]:
 
 
 def artifacts_exist() -> bool:
+    """Return True if all five model artifacts are present on disk."""
     return all(p.exists() for p in (
         PRICE_MODEL_PATH, RANGE_MODEL_PATH, FEATURE_COLUMNS_PATH,
         RANGE_CONFIG_PATH, METADATA_PATH,

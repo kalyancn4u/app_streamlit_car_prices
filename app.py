@@ -33,6 +33,7 @@ MODELS = Path("models")
 # --- Load the trained models + UI metadata (once) --------------------------
 @st.cache_resource(show_spinner="Loading…")
 def load():
+    """Load the two trained models and the UI metadata once (cached for the session)."""
     price_model = joblib.load(MODELS / "price_model.pkl")
     range_model = joblib.load(MODELS / "range_model.pkl")
     feature_columns = json.loads((MODELS / "feature_columns.json").read_text())
