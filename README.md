@@ -641,7 +641,7 @@ retraining — is in
 
 ## 📚 Further Reading
 
-Three companion guides go deeper, each written for a beginner:
+Four companion guides go deeper, each written for a beginner:
 
 - 📐 **[docs/DESIGN_NOTES.md](docs/DESIGN_NOTES.md)** — the engineering rationale:
   the data contract, the modelling and UI/UX decisions, and how the pieces fit.
@@ -650,6 +650,9 @@ Three companion guides go deeper, each written for a beginner:
   generated files are.
 - 🤖 **[docs/CI_CD_GITHUB_ACTIONS.md](docs/CI_CD_GITHUB_ACTIONS.md)** — automate
   testing, deployment and retraining with GitHub Actions.
+- 🧪 **[docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md)** — learn testing & debugging from
+  scratch by completing the graded stubs in [`tests/test_stubs.py`](tests/test_stubs.py)
+  (a green baseline lives in [`tests/test_smoke.py`](tests/test_smoke.py)).
 
 ---
 
