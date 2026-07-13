@@ -56053,8 +56053,8 @@
     }
   },
   "metrics": {
-    "price_r2": 0.9503,
+    "price_r2": 0.9501,
     "price_mae_lakhs": 0.706,
-    "range_accuracy": 0.7687
+    "range_accuracy": 0.7707
   }
 }
