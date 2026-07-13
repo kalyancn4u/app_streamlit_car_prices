@@ -1,5 +1,10 @@
-joblib
-numpy
-pandas
+# Pinned to exactly match the training environment (conda env "env_py310_dsml",
+# Python 3.10.9) so the saved .pkl models unpickle identically on Streamlit Cloud.
+# The Python version itself is pinned separately in the .python-version file.
+joblib==1.4.2
+numpy==1.26.4
+pandas==2.3.3
 scikit-learn==1.6.1
-streamlit
+scipy==1.10.1
+streamlit==1.42.0
+threadpoolctl==3.5.0
