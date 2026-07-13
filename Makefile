@@ -16,7 +16,7 @@
 # =============================================================================
 
 ENV   ?= car-prices          # conda env name (override: make ENV=foo)
-PY    ?= 3.12                 # Python version for the fresh env (override: make PY=3.14)
+PY    ?= 3.14                 # Python version for the fresh env (override: make PY=3.14)
 CONDA ?= conda               # path to conda (override: make CONDA=/d/tools/miniconda3/Scripts/conda.exe)
 
 RUN := $(CONDA) run -n $(ENV) --no-capture-output
