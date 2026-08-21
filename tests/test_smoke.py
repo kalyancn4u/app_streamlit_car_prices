@@ -21,11 +21,13 @@ needs_model = pytest.mark.skipif(not _has_model, reason="run `python train_model
 
 def test_config_price_unit_is_lakhs():
     # The single most important fact about this dataset: prices are in Lakhs.
+    """Guards the core dataset fact: prices are in Lakhs and bands are Low/Medium/High."""
     assert train_model.CONFIG["price_unit"] == "Lakhs"
     assert train_model.CONFIG["range_labels"] == ["Low", "Medium", "High"]
 
 
 def test_clean_drops_nonpositive_and_uppercases():
+    """clean_dataset drops non-positive prices and trims + uppercases make/model."""
     df = pd.DataFrame({"selling_price": [5.0, -1.0, 0.0],
                        "make": [" maruti ", "x", "y"],
                        "model": ["swift vxi", "a", "b"]})
